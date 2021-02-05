@@ -13,7 +13,7 @@ public class Main {
         try {
             example=reader.readLine();
             if(!isValid(example)) throw new Exception();
-            System.out.println(doMath(getSigns(example)));
+            System.out.println(doMath(getNumbersOperations(example)));
         } catch (Exception e) {
             System.out.println("pls check Your operation");
         }
@@ -22,18 +22,18 @@ public class Main {
     public static int doMath(NumbersOperations nA){
         try{
             for(int i=0;i<nA.getOperations().size();i++){
-                if(nA.getOperations().get(i)=='/'){
+                if(nA.getOperations().get(i)=='*'){
                     nA.removeOperation(i);
-                    if(nA.getNumber(i+1)==0) throw new Exception();
-                    nA.setNumber(i,(nA.getNumber(i)/nA.getNumber(i+1)));
+                    nA.setNumber(i,(nA.getNumber(i)*nA.getNumber(i+1)));
                     nA.removeNumber(i+1);
                     i-=1;
                 }
             }
             for(int i=0;i<nA.getOperations().size();i++){
-                if(nA.getOperations().get(i)=='*'){
+                if(nA.getOperations().get(i)=='/'){
                     nA.removeOperation(i);
-                    nA.setNumber(i,(nA.getNumber(i)*nA.getNumber(i+1)));
+                    if(nA.getNumber(i+1)==0) throw new Exception();
+                    nA.setNumber(i,(nA.getNumber(i)/nA.getNumber(i+1)));
                     nA.removeNumber(i+1);
                     i-=1;
                 }
@@ -62,7 +62,7 @@ public class Main {
         }
     }
 
-    public static NumbersOperations getSigns(String example){
+    public static NumbersOperations getNumbersOperations(String example){
         String SIGNS="/*+-";
         String DIGITS="0123456789";
         String number="";
